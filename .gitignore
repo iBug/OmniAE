@@ -1,6 +1,9 @@
 # Config and credentials
 config
 
+# Databases
+*.db
+
 ################################
 # These are provided by GitHub #
 ################################
