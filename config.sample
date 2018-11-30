@@ -1,0 +1,13 @@
+[Config]
+
+# Stack Exchange API keys & credentials
+read_key=IAkbitmze4B8KpacUfLqkw((
+#write_key=key_key_key_key
+#write_token=token_token_token
+
+# ChatExchange credentials
+#ChatU=androidoverflow@example.com
+#ChatP=asdfghjkl
+
+# Site settings
+site_id=139
