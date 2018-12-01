@@ -15,6 +15,7 @@ class config:  # noqa: N801
     write_token = None
 
     site = None
+    site_id = None
 
     log_level = None
     file_log_level = None
@@ -27,6 +28,8 @@ class obj:  # noqa: N801
 
 class worker:  # noqa: N801
     sews = None
+    scanner = None
+    handler = None
 
 
 config_parser = ConfigParser()
