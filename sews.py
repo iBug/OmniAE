@@ -15,17 +15,25 @@ class StackExchangeWebSocket:
 
     def open(self, max_tries=3):
         if self.ws:
-            # TODO: handle this
-            return
+            raise ValueError("WebSocket is already open")
 
         for tries in range(1, 1 + max_tries, 1):
+            log('debug', "Trying to open websocket (Attempt {})".format(tries))
             try:
                 self.ws = websocket.create_connection(StackExchangeWebSocket.WS_URL)
+                log('debug', "Successfully opened websocket")
                 return self.ws
             except websocket.WebSocketException:
                 pass
         else:
             raise ConnectionError("Failed to open websocket")
+
+    def close(self):
+        try:
+            self.ws.close()
+            self.ws = None
+        except Exception as e:
+            pass
 
     def register(self, action, callback=None):
         if not isinstance(action, str):
@@ -52,6 +60,7 @@ class StackExchangeWebSocket:
             self.register(action)
 
     def event_loop(self):
+        log('debug', "Starting Stack Exchange WebSocket event loop")
         while True:
             try:
                 j = self.ws.recv()

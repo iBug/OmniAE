@@ -14,6 +14,20 @@ class config:  # noqa: N801
     write_key = None
     write_token = None
 
+    site = None
+
+    log_level = None
+    file_log_level = None
+
+
+class obj:  # noqa: N801
+    site_list = None
+    sews = None
+
+
+class thread:  # noqa: N801
+    sews = None
+
 
 config_parser = ConfigParser()
 
@@ -25,5 +39,11 @@ def load():
         config_parser.read("config", encoding="utf-8")
     else:
         config_parser.read("config.sample", encoding="utf-8")
-
     conf = config_parser['Config']
+
+    config.read_key = conf.get('read_key', "IAkbitmze4B8KpacUfLqkw((")
+    config.write_key = conf.get('write_key')
+    config.write_token = conf.get('write_token')
+    config.site = conf.get('site', "android.stackexchange.com")
+    config.log_level = int(conf.get('log_level', 1))
+    config.file_log_level = int(conf.get('file_log_level', 3))

@@ -3,7 +3,6 @@ import html
 
 import core
 from classes import Post
-import parsing
 
 
 def get_post(site, post_id, post_type):
@@ -17,6 +16,7 @@ def get_post(site, post_id, post_type):
     else:
         raise ValueError("post_type must be either 'question' or 'answer'")
 
+    api_filter = r"!*1SdVEqS-F*E3oCZH7zp*8EkDYoKq98j9rjbmSU4y"
     request_url = "https://api.stackexchange.com/2.2/{}s/{}".format(post_type, post_id)
     params = {
         'filter': api_filter,
@@ -27,21 +27,22 @@ def get_post(site, post_id, post_type):
     try:
         item = response['items'][0]
     except (KeyError, IndexError):
+        print(response)
         return None
 
     post = Post()
     post.id = post_id
-    post.url = parsing.url_to_shortlink(item['link'])
+    post.url = item['share_link']
     post.type = post_type
     post.title = html.unescape(item['title'])
     if 'owner' in item and 'link' in item['owner']:
-        post_data.owner_name = html.unescape(item['owner']['display_name'])
-        post_data.owner_url = item['owner']['link']
-        post_data.owner_rep = item['owner']['reputation']
+        post.owner_name = html.unescape(item['owner']['display_name'])
+        post.owner_url = item['owner']['link']
+        post.owner_rep = item['owner']['reputation']
     else:
-        post_data.owner_name = ""
-        post_data.owner_url = ""
-        post_data.owner_rep = 1
+        post.owner_name = ""
+        post.owner_url = ""
+        post.owner_rep = 1
     post.site = site
     post.body = item['body']
     post.score = item['score']
