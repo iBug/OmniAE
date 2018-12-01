@@ -11,7 +11,7 @@ import workers
 
 def main():
     core.load()
-    
+
     site_id = get_site_id(core.config.site)
     log('debug', "Fetched site ID {} from {}".format(site_id, core.config.site))
     core.config.site_id = site_id

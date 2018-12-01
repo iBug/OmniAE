@@ -1,5 +1,6 @@
 from utils import log
 
+
 class PostHandler:
     def __init__(self):
         pass

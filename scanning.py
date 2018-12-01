@@ -56,7 +56,4 @@ class PostScanner:
         return PostScanResult(post, self, score, reasons, "\n".join(details))
 
 
-core.check.development = PostScanner("development question")
-
-
 import checks

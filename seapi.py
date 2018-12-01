@@ -67,6 +67,7 @@ def get_post(site, post_id, post_type):
         post.owner_rep = 1
     post.site = site
     post.body = item['body']
+    post.raw_body = item['body_markdown']
     post.score = item['score']
     post.upvotes = item['up_vote_count']
     post.downvotes = item['down_vote_count']
