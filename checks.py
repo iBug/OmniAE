@@ -6,7 +6,7 @@ from utils import log
 from scanning import PostScanner
 
 
-development = core.check.development = PostScanner("development question")
+development = core.check.development = PostScanner("development question", 5.0)
 
 
 @development.new("bracket count", 1.4)

@@ -78,3 +78,44 @@ def get_post(site, post_id, post_type):
     else:
         post.question_id = post_id
     return post
+
+
+def check_write_permission():
+    return bool(core.config.write_key and core.config.write_token)
+
+
+def add_mod_flag(site, post_id, post_type, text):
+    if not check_write_permission():
+        return
+
+    url = "https://api.stackexchange.com/2.2/{}s/{}/flags/options".format(
+        post_type, post_id)
+    params = {
+        'key': core.config.write_key,
+        'access_token': core.config.write_token,
+        'site': site,
+    }
+    response = requests.get(url, params=params).json()
+    # look for "in need of moderator intervention
+    option_id = None
+    if 'items' not in response:
+        return
+    for item in response['items']:
+        if item['title'] == "in need of moderator intervention":
+            option_id = item['option_id']
+            break
+    else:
+        return
+
+    # cast the flag
+    url = "https://api.stackexchange.com/2.2/{}s/{}/flags/add".format(
+        post_type, post_id)
+    params = {
+        'key': core.config.write_key,
+        'access_token': core.config.write_token,
+        'site': site,
+        'option_id': str(option_id),
+        'comment': str(text),
+    }
+    response = requests.get(url, params=params).json()
+    return response

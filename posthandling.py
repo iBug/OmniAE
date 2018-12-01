@@ -1,4 +1,5 @@
 from utils import log
+from seapi import add_mod_flag
 
 
 class PostHandler:
@@ -10,5 +11,8 @@ class PostHandler:
             log('info', "Post {} inactive result, score={}".format(result.post.title, result.score))
             return
 
-        log('info', "Post {} caught for {} with score {}".format(
+        post = result.post
+        if result.scanner is core.check.development:
+            add_mod_flag(post.site, post.id, "question", "[Auto] Development question detected")
+        log('info', "Post {} caught for {}, score={}".format(
             result.post.title, result.scanner.name, result.score))
