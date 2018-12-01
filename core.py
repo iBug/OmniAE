@@ -32,6 +32,10 @@ class worker:  # noqa: N801
     handler = None
 
 
+class check:  # noqa: N801
+    development = None
+
+
 config_parser = ConfigParser()
 
 

@@ -10,3 +10,4 @@ def on_new_post(j):
 
     post = seapi.get_post(core.config.site, int(j['id']), "question")
     log('debug', "Fetched post: [{}] {}".format(post.id, post.title))
+    core.worker.scanner.enqueue(post)

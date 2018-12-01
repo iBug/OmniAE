@@ -17,6 +17,8 @@ def main():
     core.config.site_id = site_id
 
     core.worker.sews.start()
+    core.worker.scanner.start()
+    core.worker.handler.start()
 
 
 if __name__ == "__main__":
