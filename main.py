@@ -19,7 +19,7 @@ def main():
     sews = core.obj.sews = StackExchangeWebSocket()
     sews.open()
     sews.register("{}-home-active".format(site_id), eventhandlers.on_new_post)
-    core.thread.sews = Thread(target=sews.event_loop)
+    core.thread.sews = Thread(name="sews", target=sews.event_loop)
     core.thread.sews.start()
 
 

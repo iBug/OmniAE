@@ -25,7 +25,7 @@ class obj:  # noqa: N801
     sews = None
 
 
-class thread:  # noqa: N801
+class worker:  # noqa: N801
     sews = None
 
 
