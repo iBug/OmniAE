@@ -1,7 +1,12 @@
 #!/usr/bin/env python3
 
-import os
 import sys
+from excepthook import uncaught_exception, install_thread_excepthook
+sys.excepthook = uncaught_exception
+install_thread_excepthook()
+# Exception hook installed, can proceed now
+
+import os
 from threading import Thread
 
 import core
