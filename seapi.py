@@ -2,6 +2,7 @@ import requests
 import html
 
 import core
+from utils import log
 
 
 class Post:
@@ -99,12 +100,15 @@ def add_mod_flag(site, post_id, post_type, text):
     # look for "in need of moderator intervention
     option_id = None
     if 'items' not in response:
+        log('debug', "'items' not found in response")
         return
     for item in response['items']:
         if item['title'] == "in need of moderator intervention":
             option_id = item['option_id']
+            log('debug', "Found mod flag option ID {}".format(option_id))
             break
     else:
+        log('debug', "Mod flag option not found")
         return
 
     # cast the flag
@@ -117,5 +121,7 @@ def add_mod_flag(site, post_id, post_type, text):
         'option_id': str(option_id),
         'comment': str(text),
     }
+    log('debug', "Calling {} with params={}".format(url, params))
     response = requests.get(url, params=params).json()
+    log('debug', response)
     return response
