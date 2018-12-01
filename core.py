@@ -19,6 +19,7 @@ class config:  # noqa: N801
 
     log_level = None
     file_log_level = None
+    log_file = "log.txt"
 
 
 class obj:  # noqa: N801

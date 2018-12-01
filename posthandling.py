@@ -1,3 +1,4 @@
+import core
 from utils import log
 from seapi import add_mod_flag
 
@@ -12,7 +13,10 @@ class PostHandler:
             return
 
         post = result.post
-        if result.scanner is core.check.development:
+        if result.scanner.name == "development question":
+            log('debug', "Adding mod flag on <{}>".format(post.title))
             add_mod_flag(post.site, post.id, "question", "[Auto] Development question detected")
+        else:
+            print(result.scanner)
         log('info', "Post {} caught for {}, score={}".format(
             result.post.title, result.scanner.name, result.score))

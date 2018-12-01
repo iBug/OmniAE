@@ -4,6 +4,10 @@ config
 # Databases
 *.db
 
+# Logs
+*[Ll]og.txt
+*[Ll]ogs.txt
+
 ################################
 # These are provided by GitHub #
 ################################

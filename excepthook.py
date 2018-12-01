@@ -8,9 +8,9 @@ import requests
 
 from utils import log
 
-# noinspection PyProtectedMember
+
 def uncaught_exception(exctype, value, tb):
-    log('error', exctype)
+    log('error', "{}: {}".format(exctype.__name__, str(value)))
     os._exit(1)
 
 
