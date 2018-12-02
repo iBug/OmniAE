@@ -14,6 +14,9 @@ _LOG_CONFIG = {
     'info': (1, 'cyan'),
     'warning': (2, 'yellow'),
     'error': (3, 'red'),
+    'attention': (1, 'green'),
+    'status': (1, 'magenta'),
+    '???': (1, 'blue'),
 }
 
 
