@@ -1,3 +1,4 @@
+import os
 import subprocess as sp
 from sh.contrib import git
 from sh import ErrorReturnCode as GitError
@@ -45,6 +46,7 @@ def pull_update():
         pass
     git.checkout('-b', 'temp', "origin/master")
     git.branch('-M', 'master')
+    os._exit(0)
 
 
 def check_for_updates():
