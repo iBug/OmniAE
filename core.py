@@ -21,6 +21,8 @@ class config:  # noqa: N801
     file_log_level = None
     log_file = "log.txt"
 
+    commit_info = None
+
 
 class obj:  # noqa: N801
     site_list = None

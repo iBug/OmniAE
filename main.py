@@ -13,7 +13,7 @@ import core
 from utils import log
 from seapi import get_site_id
 from tasking import Tasker
-from gitmanager import check_for_updates
+from gitmanager import get_commit_info, check_for_updates
 import workers
 
 
@@ -24,6 +24,8 @@ def register_tasks():
 
 def main():
     core.load()
+    commit_info = get_commit_info()
+    log('info', "Starting at [{}] {}: {}".format(commit_info['id'], commit_info['author'], commit_info['message']))
 
     register_tasks()
 

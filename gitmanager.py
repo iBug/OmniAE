@@ -7,13 +7,17 @@ from utils import log, log_exception
 
 
 def get_commit_info():
+    if core.config.commit_info:
+        return core.config.commit_info
+
     try:
         data = sp.check_output(['git', 'log', '-1', '--pretty=%H%n%an%n%s'], stderr=sp.STDOUT)
     except sp.CalledProcessError as e:
         log_exception(e)
-        return
+        return None
     full_id, author, message = data.decode('utf-8').strip().split("\n")
-    return {'id': full_id[:7], 'full_id': full_id, 'author': author, 'message': message}
+    core.config.commit_info = {'id': full_id[:7], 'full_id': full_id, 'author': author, 'message': message}
+    return core.config.commit_info
 
 
 def is_same_commit(head_a, head_b):
