@@ -1,17 +1,22 @@
 import asyncio
+import threading
 
 
 class Tasker:
-    def __init__(self):
+    def __init__(self, name="tasker"):
         self.loop = asyncio.new_event_loop()
+        self.thread = threading.Thread(name=name, target=self._run, daemon=True)
 
-    def _start(self):
+    def _run(self):
         asyncio.set_event_loop(self.loop)
 
         try:
             self.loop.run_forever()
         finally:
             self.loop.close()
+
+    def start(self):
+        self.thread.start()
 
     def do(self, func, *args, **kwargs):
         handle = self.loop.call_soon(lambda: func(*args, **kwargs))

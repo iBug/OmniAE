@@ -19,6 +19,7 @@ import workers
 
 def register_tasks():
     core.tasker = Tasker()
+    core.tasker.start()
     core.tasker.periodic(check_for_updates, interval=60)
 
 
