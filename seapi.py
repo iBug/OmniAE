@@ -50,6 +50,7 @@ def get_post(site, post_id, post_type):
         response = requests.get(request_url, params=params).json()
         try:
             item = response['items'][0]
+            break
         except (KeyError, IndexError):
             print(response)
     else:
