@@ -46,11 +46,14 @@ def get_post(site, post_id, post_type):
         'key': core.config.read_key,
         'site': site,
     }
-    response = requests.get(request_url, params=params).json()
-    try:
-        item = response['items'][0]
-    except (KeyError, IndexError):
-        print(response)
+    for attempt in range(1, 4):
+        response = requests.get(request_url, params=params).json()
+        try:
+            item = response['items'][0]
+        except (KeyError, IndexError):
+            print(response)
+    else:
+        log('warning', "Failed to fetch {} after 3 attempts".format(post_id))
         return None
 
     post = Post()
