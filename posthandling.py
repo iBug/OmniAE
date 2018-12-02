@@ -9,7 +9,7 @@ class PostHandler:
 
     def handle(self, result):
         if not result.active:
-            log('info', "Post {} inactive result, score={}".format(result.post.title, result.score))
+            log('info', "Post {} inactive result, score={:.3g}".format(result.post.title, result.score))
             return
 
         post = result.post
@@ -18,5 +18,5 @@ class PostHandler:
             add_mod_flag(post.site, post.id, "question", "[Auto] Development question detected")
         else:
             print(result.scanner)
-        log('info', "Post {} caught for {}, score={}".format(
-            result.post.title, result.scanner.name, result.score))
+        log('info', "[{}] {} caught for {}, score={:.3g}".format(
+            result.post.id, result.post.title, result.scanner.name, result.score))

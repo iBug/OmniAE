@@ -52,14 +52,14 @@ def pull_update():
 def check_for_updates():
     try:
         git.remote.update()
-        if not is_commit_pullable("origin/master"):
+        if is_same_commit("HEAD", "origin/master"):
             return
-        elif is_same_commit("HEAD", "origin/master"):
+        elif not is_commit_pullable("origin/master"):
             return
-        pull_update()
         commit_info = get_commit_info()
         log('info',
-            "Pulled [{}] {}: {}".format(
+            "Pulling [{}] {}: {}".format(
                 commit_info['id'], commit_info['author'], commit_info['message']))
+        pull_update()
     except Exception as e:
         log_exception(e)
