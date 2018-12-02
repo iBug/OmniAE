@@ -6,13 +6,13 @@ from utils import log
 from scanning import PostScanner
 
 
-development = core.check.development = PostScanner("development question", 5.0)
+development = core.check.development = PostScanner("development question", 1.99)
 
 
 @development.new("bracket count", 1.4)
 def bracket_count(post):
     score = 0.0
-    body = post.raw_body
+    body = post.title + "\n\n" + post.raw_body
 
     n_brackets = body.count("{") + body.count("}")
     if n_brackets >= 3:
@@ -24,7 +24,7 @@ def bracket_count(post):
 @development.new("java keyword", 1.0)
 def java_keyword(post):
     score = 0.0
-    body = post.raw_body
+    body = post.title + "\n\n" + post.raw_body
 
     n = body.count("public")
     if n >= 5:
@@ -40,7 +40,7 @@ def java_keyword(post):
 @development.new("android code", 1.5)
 def android_code(post):
     score = 0.0
-    body = post.raw_body
+    body = post.title + "\n\n" + post.raw_body
 
     match = regex.compile(
         r"\b[A-Za-z]{2,}(?:Activity|Fragment|View|Text|Exception|Manager|Method)\b"
