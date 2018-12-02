@@ -39,7 +39,7 @@ def log_file(log_level, *args):
 
     time_s = datetime.datetime.now().isoformat()[11:23]
     log_s = "\n             ".join([str(x) for x in args])
-    with open(core.config.log_file, "w") as f:
+    with open(core.config.log_file, "a") as f:
         print("[{}] {}".format(time_s, log_s), file=f)
 
 
