@@ -1,5 +1,7 @@
-import requests
+import time
 import html
+
+import requests
 
 import core
 from utils import log
@@ -53,6 +55,7 @@ def get_post(site, post_id, post_type):
             break
         except (KeyError, IndexError):
             print(response)
+            time.sleep(2.000)
     else:
         log('warning', "Failed to fetch {} after 3 attempts".format(post_id))
         return None
