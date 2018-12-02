@@ -27,7 +27,7 @@ def is_commit_pullable(ref):
         # git diff-tree --no-commit-id --name-only -r <>
         files = git('diff-tree', '--no-commit-id', '--name-only', '-r', ref.strip())
         files = str(files).split()
-        return "noexec" in files
+        return "noexec" not in files
     except GitError as e:
         log_exception(e)
         return False
