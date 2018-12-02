@@ -33,6 +33,16 @@ def is_commit_pullable(ref):
         return False
 
 
+def pull_update():
+    # Force pull update
+    try:
+        git.branch('-D', 'temp')
+    except GitError:
+        pass
+    git.checkout('-b', 'temp', "origin/master")
+    git.branch('-M', 'master')
+
+
 def check_for_updates():
     try:
         git.remote.update()
@@ -40,7 +50,7 @@ def check_for_updates():
             return
         elif is_same_commit("HEAD", "origin/master"):
             return
-        git.pull()
+        pull_update()
         commit_info = get_commit_info()
         log('info',
             "Pulled [{}] {}: {}".format(
