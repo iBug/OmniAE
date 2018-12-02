@@ -25,6 +25,7 @@ class config:  # noqa: N801
 class obj:  # noqa: N801
     site_list = None
     sews = None
+    tasker = None
 
 
 class worker:  # noqa: N801

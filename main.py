@@ -11,11 +11,18 @@ from threading import Thread
 
 import core
 from utils import log, get_site_id
+from tasking import Tasker
 import workers
+
+
+def registe_tasks():
+    core.tasker = Tasker()
 
 
 def main():
     core.load()
+
+    register_tasks()
 
     site_id = get_site_id(core.config.site)
     log('debug', "Fetched site ID {} from {}".format(site_id, core.config.site))
