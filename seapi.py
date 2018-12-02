@@ -54,7 +54,6 @@ def get_post(site, post_id, post_type):
             item = response['items'][0]
             break
         except (KeyError, IndexError):
-            print(response)
             time.sleep(2.000)
     else:
         log('warning', "Failed to fetch {} after 3 attempts".format(post_id))
