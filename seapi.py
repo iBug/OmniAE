@@ -125,3 +125,14 @@ def add_mod_flag(site, post_id, post_type, text):
     response = requests.post(url, data=params).json()
     log('debug', response)
     return response
+
+
+def get_site_id(hostname):
+    if not core.obj.site_list:
+        core.obj.site_list = requests.get(
+            "https://meta.stackexchange.com/topbar/site-switcher/all-pinnable-sites").json()
+
+    for item in core.obj.site_list:
+        if item['hostname'] == hostname:
+            return item['siteid']
+    return None

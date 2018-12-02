@@ -26,7 +26,7 @@ def log(log_level, *args):
     s = "{} {}".format(colored("[{}]".format(time_s), color, attrs=['bold']),
                        "\n             ".join([str(x) for x in args]))
     print(s, file=sys.stderr)
-    if level == 3:
+    if sys.exc_info()[1] is not None:
         traceback.print_stack()
 
     log_file(log_level, *args)
@@ -43,12 +43,10 @@ def log_file(log_level, *args):
         print("[{}] {}".format(time_s, log_s), file=f)
 
 
-def get_site_id(hostname):
-    if not core.obj.site_list:
-        core.obj.site_list = requests.get(
-            "https://meta.stackexchange.com/topbar/site-switcher/all-pinnable-sites").json()
-
-    for item in core.obj.site_list:
-        if item['hostname'] == hostname:
-            return item['siteid']
-    return None
+def log_exception(exc_obj=None):
+    if exc_obj is None:
+        exc_obj = sys.exc_info()[1]
+    if exc_obj is None:
+        return  # No exception, huh?
+    exc_s = "{}: {}".format(type(exc_obj).__name__, str(exc_obj))
+    log('error', exc_s)

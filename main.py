@@ -10,13 +10,16 @@ import os
 from threading import Thread
 
 import core
-from utils import log, get_site_id
+from utils import log
+from seapi import get_site_id
 from tasking import Tasker
+from gitmanager import check_for_updates
 import workers
 
 
-def registe_tasks():
+def register_tasks():
     core.tasker = Tasker()
+    core.tasker.periodic(check_for_updates, interval=60)
 
 
 def main():
