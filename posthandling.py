@@ -1,3 +1,5 @@
+from datetime import datetime
+
 import core
 from utils import log
 from seapi import add_mod_flag
@@ -15,6 +17,10 @@ class PostHandler:
 
         post = result.post
         if result.scanner.name == "development question":
+            if post.creation_time < datetime.now().timestamp() - 300:
+                log('debug', "Post too old ({}), ignored".format(
+                    datetime.fromtimestamp(post.creation_time).isoformat()))
+                return
             log('debug', "Adding mod flag on <{}>".format(post.title))
             add_mod_flag(post.site, post.id, "question", "[Auto] Development question detected")
         else:
