@@ -19,7 +19,9 @@ class config:  # noqa: N801
 
     log_level = None
     file_log_level = None
-    log_file = "log.txt"
+    log_file = None
+
+    db_file = None
 
     repo_slug = None
     commit_info = None
@@ -56,7 +58,12 @@ def load():
     config.read_key = conf.get('read_key', "IAkbitmze4B8KpacUfLqkw((")
     config.write_key = conf.get('write_key')
     config.write_token = conf.get('write_token')
+
     config.site = conf.get('site', "android.stackexchange.com")
+
     config.log_level = int(conf.get('log_level', 1))
     config.file_log_level = int(conf.get('file_log_level', 3))
+    config.log_file = conf.get('log_file', "log.txt")
+
+    config.db_file = conf.get('db_file', "androidoverflow.db")
     config.repo_slug = conf.get('repo_slug', "iBug/AndroidOverflow")
