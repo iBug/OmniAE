@@ -22,7 +22,9 @@ class PostHandler:
                     datetime.fromtimestamp(post.creation_time).isoformat()))
                 return
             log('debug', "Adding mod flag on <{}>".format(post.title))
-            add_mod_flag(post.site, post.id, "question", "[Auto] Development question detected")
+            add_mod_flag(post.site, post.id,
+                         "question", "[Auto] Development question detected, score={:.3g}".format(
+                             result.score))
         else:
             print(result.scanner)
         log('attention', "[{}] {} caught for {}, score={:.3g}".format(
