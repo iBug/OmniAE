@@ -34,6 +34,7 @@ def java_keyword(post):
         score += (n - 2) / 8
     n = body.count("@Override")
     score += n / 2
+    m = regex.compile(r"public\s+(class|void)").findall(body)
     return score, "Post has Java keyword"
 
 
@@ -43,7 +44,7 @@ def android_code(post):
     body = post.title + "\n\n" + post.raw_body
 
     match = regex.compile(
-        r"(?s)(?=\s)[A-Za-z]{2,}(?:Activity|Fragment|(?<!(?i:web))View|Text|Exception|Manager|Method|Interface)\b"
+        r"(?s)(?<!\.)[A-Za-z]{2,}(?:Activity|Fragment|(?<!(?i:web))View|Text|Exception|Manager|Method|Interface)\b"
     ).findall(body)
     score += len(match)
 
