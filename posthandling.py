@@ -17,9 +17,9 @@ class PostHandler:
 
         post = result.post
         if result.scanner.name == "development question":
-            if post.creation_time < datetime.now().timestamp() - 300:
+            if post.creation_date < datetime.now().timestamp() - 300:
                 log('attention', "Post too old ({}), ignored, score={}".format(
-                    datetime.fromtimestamp(post.creation_time).isoformat(),
+                    datetime.fromtimestamp(post.creation_date).isoformat(),
                     result.score))
                 return
             log('attention', "Adding mod flag on <{}>".format(post.title))
