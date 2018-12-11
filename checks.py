@@ -60,3 +60,14 @@ def android_code(post):
     score += len(match)
 
     return score, "Post has Android code"
+
+
+@development.new("coding intention", 1.0)
+def coding_intention(post):
+    score = 0.0
+    body = post.title + "\n\n" + post.raw_body
+
+    match = regex.compile(r"(?i)\b(build|write?)(?:ing)?\b.{,20}\bandroid\b.{,20}\bapp\b").findall(body)
+    score += len(match)
+
+    return score, "placeholder"
