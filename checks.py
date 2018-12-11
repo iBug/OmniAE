@@ -29,12 +29,13 @@ def java_keyword(post):
     n = body.count("public")
     if n >= 5:
         score += (n - 5) / 10
-    n = body.count("class")
-    if n >= 2:
-        score += (n - 2) / 8
+    n = regex.compile(r"\b(?:class|void|int|boolean)\b").findall(body)
+    if len(n) >= 2:
+        score += (len(n) - 2) / 2
     n = body.count("@Override")
-    score += n / 2
-    m = regex.compile(r"public\s+(class|void)").findall(body)
+    score += n
+    m = regex.compile(r"(public|private)\s+(class|void)").findall(body)
+    score += len(m) * 1.5
     return score, "Post has Java keyword"
 
 
