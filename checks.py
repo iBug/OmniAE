@@ -14,7 +14,7 @@ def bracket_count(post):
     score = 0.0
     body = post.title + "\n\n" + post.raw_body
 
-    n_brackets = body.count("{") + body.count("}") + 4 * body.count("()")
+    n_brackets = body.count("{") + body.count("}") + len(regex.compile(r"(?<=\w)\(\)(?=[\s);])").findall(body))
     if n_brackets >= 3:
         score += math.sqrt(n_brackets - 3)
 
