@@ -8,7 +8,7 @@ jobs:
       - restore_cache:
           key: deps-{{ .Branch }}-{{ checksum "requirements.txt" }}
       - run:
-          name: install python dependencies in venv
+          name: Install Python dependency in venv
           command: |
             python3 -m venv env
             env/bin/pip3 install -r requirements.txt --upgrade
