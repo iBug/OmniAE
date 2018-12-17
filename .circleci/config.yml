@@ -6,23 +6,23 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-        key: deps-{{ .Branch }}-{{ checksum "requirements.txt" }}
+          key: deps-{{ .Branch }}-{{ checksum "requirements.txt" }}
       - run:
-        name: install python dependencies in venv
-        command: |
-          python3 -m venv env
-          env/bin/pip3 install -r requirements.txt --upgrade
-          # env/bin/pip3 install -r user_requirements.txt --upgrade
+          name: install python dependencies in venv
+          command: |
+            python3 -m venv env
+            env/bin/pip3 install -r requirements.txt --upgrade
+            # env/bin/pip3 install -r user_requirements.txt --upgrade
       - save_cache:
-        key: deps-{{ .Branch }}-{{ checksum "requirements.txt" }}
-        paths:
-          - "env"
+          key: deps-{{ .Branch }}-{{ checksum "requirements.txt" }}
+          paths:
+            - "env"
       - run:
-        name: Lint code
-        command: env/bin/python3 -m flake8
+          name: Lint code
+          command: env/bin/python3 -m flake8
       - run:
-        name: Pytest unit tests
-        command: env/bin/python3 -W default::Warning -m pytest test
+          name: Pytest unit tests
+          command: env/bin/python3 -W default::Warning -m pytest test
       - deploy:
-        name: Deploy to GitHub
-        command: bash test/deploy.sh
+          name: Deploy to GitHub
+          command: bash test/deploy.sh
