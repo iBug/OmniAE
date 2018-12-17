@@ -11,3 +11,6 @@ if [ -z "$GH_TOKEN" ]; then
 fi
 
 e_success "Ready to deploy"
+if [ -n "$TEST_TOKEN" ]; then
+  e_info "Test token is $TEST_TOKEN"
+fi
