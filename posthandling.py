@@ -10,12 +10,14 @@ class PostHandler:
         pass
 
     def handle(self, result):
+        post = result.post
         if not result.active:
             log('info', "[{}] {}, score={:.3g}".format(
-                result.post.id, result.post.title, result.score))
+                post.id, post.title, result.score))
             return
 
-        post = result.post
+        log('attention', "[{}] {} caught as {}, score={:.3g}".format(
+            post.id, post.title, result.scanner.name, result.score))
         if result.scanner.name == "development question":
             if post.creation_date < datetime.now().timestamp() - 172800:  # 2 days
                 log('attention', "Post too old ({}), ignored, score={}".format(
@@ -28,5 +30,3 @@ class PostHandler:
                              result.score))
         else:
             print(result.scanner)
-        log('attention', "[{}] {} caught for {}, score={:.3g}".format(
-            result.post.id, result.post.title, result.scanner.name, result.score))

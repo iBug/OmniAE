@@ -129,7 +129,7 @@ def add_mod_flag(site, post_id, post_type, text):
     }
     log('debug', "Calling {} with params={}".format(url, params))
     response = requests.post(url, data=params).json()
-    log('debug', response)
+    log('debug', "Response: {!r}".format(response))
     return response
 
 
