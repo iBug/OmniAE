@@ -15,7 +15,7 @@ after_success:
 
 cache:
   directories:
-    - $HOME/virtualenv/python3.*
+    - $HOME/virtualenv/python3.7.*
     - $HOME/.cache/pip
 
 before_cache:
