@@ -24,7 +24,7 @@ main() {
   e_info "Setting remote with GH_TOKEN"
   git remote add "$REMOTE-deploy" "https://$GH_TOKEN@github.com/$REPO.git"
   e_info "Pushing to $REMOTE/$BRANCH"
-  git push -q -u $REMOTE $BRANCH
+  git push -q -u "$REMOTE-deploy" $BRANCH
   e_success "Successfully deployed"
 }
 
