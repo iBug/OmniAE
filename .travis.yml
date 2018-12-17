@@ -12,3 +12,12 @@ script:
 
 after_success:
   - bash test/deploy.sh
+
+cache:
+  directories:
+    - $HOME/virtualenv/python3.*
+    - $HOME/.cache/pip
+
+before_cache:
+  - rm -rf $HOME/.cache/pip/http
+  - rm -rf $HOME/.cache/pip/log
