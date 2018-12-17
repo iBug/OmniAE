@@ -14,7 +14,7 @@ def bracket_count(post):
     score = 0.0
     body = post.title + "\n\n" + post.raw_body
 
-    n_brackets = body.count("{") + body.count("}")
+    n_brackets = body.count("{") + body.count("}") + 4 * body.count("()")
     if n_brackets >= 3:
         score += math.sqrt(n_brackets - 3)
 
@@ -34,7 +34,7 @@ def java_keyword(post):
         score += (len(n) - 2) / 2
     n = body.count("@Override")
     score += n
-    m = regex.compile(r"(public|private)\s+(class|void)").findall(body)
+    m = regex.compile(r"(public|private)\s+(class|void|int)").findall(body)
     score += len(m) * 1.5
     return score, "Post has Java keyword"
 
