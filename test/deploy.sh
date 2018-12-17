@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 e_info() { echo -e "\e[36;1m[Info]\e[0m $*" >&2; }
 e_warning() { echo -e "\e[33;1m[Warning]\e[0m $*" >&2; }
@@ -10,7 +11,21 @@ if [ -z "$GH_TOKEN" ]; then
   exit 1
 fi
 
-e_success "Ready to deploy"
-if [ -n "$TEST_TOKEN" ]; then
-  e_info "Test token is $TEST_TOKEN"
-fi
+REMOTE=origin
+BRANCH=deploy
+USERNAME=${CIRCLE_PROJECT_USERNAME:-iBug}
+REPONAME=${CIRCLE_PROJECT_REPONAME:-AndroidOverflow}
+REPO="$USERNAME/$REPONAME"
+
+main() {
+  e_info "Starting deploy"
+  e_info "Moving branch to '$BRANCH'"
+  git branch -M $BRANCH
+  e_info "Setting remote with GH_TOKEN"
+  git remote add "$REMOTE-deploy" "https://$GH_TOKEN@github.com/$REPO.git"
+  e_info "Pushing to $REMOTE/$BRANCH"
+  git push -q -u $REMOTE $BRANCH
+  e_success "Successfully deployed"
+}
+
+main | sed "s/$GH_TOKEN/[secret]/g"
