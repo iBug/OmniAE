@@ -41,19 +41,19 @@ def pull_update():
         git.branch('-D', 'temp')
     except GitError:
         pass
-    git.checkout('-b', 'temp', "origin/master")
-    git.branch('-M', 'master')
+    git.checkout('-b', 'temp', "origin/deploy")
+    git.branch('-M', 'deploy')
     os._exit(0)
 
 
 def check_for_updates():
     try:
         git.remote.update()
-        if is_same_commit("HEAD", "origin/master"):
+        if is_same_commit("HEAD", "origin/deploy"):
             return
-        elif not is_commit_pullable("origin/master"):
+        elif not is_commit_pullable("origin/deploy"):
             return
-        commit_info = get_commit_info("origin/master")
+        commit_info = get_commit_info("origin/deploy")
         log('info',
             "Pulling [{}] {}: {}".format(
                 commit_info['id'], commit_info['author'], commit_info['message']))
