@@ -70,7 +70,7 @@ def coding_intention(post):
     score = 0.0
     body = post.title + "\n\n" + post.raw_body
 
-    match = regex.compile(r"(?i)\b(build|write?)(?:ing)?\b.{,20}\bandroid\b.{,20}\bapp\b").findall(body)
-    score += len(match)
+    match = regex.compile(r"(?i)\b(build|wr[io]te?|develop|cre?ate|ma[dk]e)e?d?(?:ing)?\b.{,20}\bapp(?:lication)?s?\b").findall(body)
+    score += 2 * len(match)
 
     return score, "placeholder"
