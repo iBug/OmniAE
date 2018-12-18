@@ -46,7 +46,7 @@ def android_code(post):
 
     match = regex.compile(
         r"(?s)(?<!\.)[A-Za-z]{2,}(?:"
-        r"Activity|Fragment|(?<!(?i:web))View|Text|Exception|Manager|Method|Interface|Listener"
+        r"Activity|Fragment|(?<!(?i:web))View|Text|Exception|Manager|Method|Interface|Listener|Request"
         r")\b"
     ).findall(body)
     score += len(match)
