@@ -59,7 +59,7 @@ def android_code(post):
     ).findall(body)
     score += len(match)
 
-    match = regex.compile("(?i)android\W*studio").findall(body)
+    match = regex.compile(r"(?i)android\W*studio").findall(body)
     score += len(match)
 
     return score, "Post has Android code"
