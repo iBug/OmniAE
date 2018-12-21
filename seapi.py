@@ -127,9 +127,9 @@ def add_mod_flag(site, post_id, post_type, text):
         'option_id': str(option_id),
         'comment': str(text),
     }
-    log('debug', "Calling {} with params={}".format(url, params))
+    # log('debug', "Calling {} with params={}".format(url, params))
     response = requests.post(url, data=params).json()
-    log('debug', "Response: {!r}".format(response))
+    # log('debug', "Response: {!r}".format(response))
     return response
 
 

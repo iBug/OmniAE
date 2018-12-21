@@ -52,7 +52,7 @@ def android_code(post):
     score += len(match)
 
     match = regex.compile(r"\b[A-Z]+(?:_[A-Z]+)+\b").findall(body)
-    score += len(match) * 0.5
+    score += len(match) * 0
 
     match = regex.compile(
         r"\b(?:MainActivity|onCreate|layout|private class|public class|Bundle)\b"
