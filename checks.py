@@ -34,7 +34,10 @@ def java_keyword(post):
         score += (len(n) - 2) / 2
     n = body.count("@Override")
     score += n
+
     m = regex.compile(r"(public|private)\s+(class|void|int)").findall(body)
+    score += len(m) * 1.5
+    m = regex.compile(r"new\s+\w+\(").findall(body)  # new Asdfgh(
     score += len(m) * 1.5
     return score, "Post has Java keyword"
 
@@ -46,9 +49,15 @@ def android_code(post):
 
     match = regex.compile(
         r"(?s)(?<!\.)[A-Za-z]{2,}(?:"
-        r"Activity|Fragment|(?<!(?i:web))View|Text|Exception|Manager|Method|Interface|Listener|Request"
+        r"Activity|Fragment|(?<!(?i:web))View|Text|Exception|Manager|Method|Interface|Listener|Request|Layout"
         r")\b"
     ).findall(body)
+    score += len(match)
+
+    keywords = "|".join([
+        r"(?:Text|Grid|List|Recycler)\s*View"
+    ])
+    match = regex.compile(r"(?i)\b({})\b".format(keywords)).findall(body)
     score += len(match)
 
     match = regex.compile(r"\b[A-Z]+(?:_[A-Z]+)+\b").findall(body)
@@ -71,6 +80,9 @@ def coding_intention(post):
     body = post.title + "\n\n" + post.raw_body
 
     match = regex.compile(r"(?i)\b(build|wr[io]te?|develop|cre?ate|ma[dk]e)e?d?(?:ing)?\b.{,20}\bapp(?:lication)?s?\b").findall(body)
-    score += 2 * len(match)
+    score += len(match) * 2.0
+
+    match = regex.compile(r"(?i)\bmy\b.{,20}\bapp(?:lication)?s?\b").findall(body)
+    score += len(match) * 1.0
 
     return score, "placeholder"
