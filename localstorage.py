@@ -23,3 +23,8 @@ class LocalStorage:
         except KeyError:
             raise
         return db.execute(query, tuple(params), **kwargs)
+
+
+class PostStorage(LocalStorage):
+    def __init__(self):
+        raise NotImplementedError
