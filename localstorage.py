@@ -12,3 +12,14 @@ class LocalStorage:
         if thread_id not in self.dbs:
             self.dbs[thread_id] = sqlite3.connect(self.filename)
         return self.dbs[thread_id]
+
+    def __call__(self, query, params=(), **kwargs):
+        return self.execute(query, params, **kwargs)
+
+    def execute(self, query, params=(), **kwargs):
+        thread_id = threading.get_ident()
+        try:
+            db = self.dbs[thread_id]
+        except KeyError:
+            raise
+        return db.execute(query, tuple(params), **kwargs)

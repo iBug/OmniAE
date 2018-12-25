@@ -83,6 +83,6 @@ def coding_intention(post):
     score += len(match) * 2.0
 
     match = regex.compile(r"(?i)\bmy\b.{,20}\bapp(?:lication)?s?\b").findall(body)
-    score += len(match) * 1.0
+    score += len(match) * 0.499
 
     return score, "placeholder"
