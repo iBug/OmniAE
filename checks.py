@@ -55,7 +55,7 @@ def android_code(post):
     score += len(match)
 
     keywords = "|".join([
-        r"(?:Text|Grid|List|Recycler)\s*View"
+        r"(?i:Text|Grid|List|Recycler)\s*View"
     ])
     match = regex.compile(r"(?i)\b({})\b".format(keywords)).findall(body)
     score += len(match)
@@ -64,9 +64,9 @@ def android_code(post):
     score += len(match) * 0
 
     match = regex.compile(
-        r"\b(?:MainActivity|onCreate|layout|private class|public class|Bundle)\b"
+        r"\b(?:MainActivity|AppCompatActivity|onCreate)\b"
     ).findall(body)
-    score += len(match)
+    score += len(match) * 2.0
 
     match = regex.compile(r"(?i)android\W*studio").findall(body)
     score += len(match)
