@@ -3,6 +3,10 @@ sudo: false
 language: python
 python: "3.7.1"
 
+before_install:
+  - rm -rf $HOME/.cache/pip/http
+  - rm -rf $HOME/.cache/pip/log
+
 install:
   - pip3 install --upgrade -r requirements.txt
 
