@@ -11,6 +11,7 @@ class PostHandler:
 
     def handle(self, result):
         post = result.post
+        core.obj.post_storage.add(post)
         if not result.active:
             log('info', "[{}] {}, score={:.3g}".format(
                 post.id, post.title, result.score))
@@ -26,7 +27,7 @@ class PostHandler:
                 return
             log('attention', "Adding mod flag on <{}>".format(post.title))
             add_mod_flag(post.site, post.id,
-                         "question", "[Auto] Development question detected, score={:.3g}".format(
+                         "question", "[Auto] Development question detected, score={:.2g}".format(
                              result.score))
         else:
-            print(result.scanner)
+            print("No handler implemented for {!r}".format(result.scanner))

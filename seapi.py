@@ -29,6 +29,14 @@ class Post:
         self.creation_date = None
         self.last_edit_date = None
 
+    def to_list(self):
+        return [
+            self.id, self.url, self.type, self.site,
+            self.owner_url or "", self.owner_name or "", self.owner_rep or 0, self.title,
+            self.body, self.raw_body, self.score, self.upvote,
+            self.downvote, self.question_id or 0, self.creation_date, self.last_edit_date
+        ]
+
 
 def get_post(site, post_id, post_type):
     """

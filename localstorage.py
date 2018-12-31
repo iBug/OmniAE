@@ -24,11 +24,18 @@ class LocalStorage:
             raise
         return db.execute(query, tuple(params), **kwargs)
 
+    def create_table(self, table, schema):
+        if self.table_exists(table):
+            return False
+        return self.execute("CREATE TABLE {} ({})".format(table, ", ".join(schema)))
+
     def table_exists(self, table="sqlite_master"):
-        return bool(self.execute("SELECT name FROM sqlite_master WHERE type='table' AND name=?", [table]))
+        return bool(self.execute("SELECT name FROM sqlite_master WHERE type='table' AND name=?;", [table]))
 
 
 class PostStorage(LocalStorage):
+    table = "posts"
+
     def __init__(self, filename):
         self.ls = LocalStorage(filename)
 
@@ -36,7 +43,7 @@ class PostStorage(LocalStorage):
         self.ls.open()
 
     def initialize(self):
-        pass
+        self.ls.create_table(self.table, ["id INTEGER", "url TEXT PRIMARY KEY", "type TEXT", "site TEXT", "owner_url TEXT", "owner_name TEXT", "owner_rep INTEGER", "title TEXT", "body TEXT", "raw_body TEXT", "score INTEGER", "upvote INTEGER", "downvote INTEGER", "question_id INTEGER", "creation_date INTEGER", "last_edit_date INTEGER"])
 
     def add(self, post):
-        pass
+        return self.ls.execute("INSERT INTO {} VALUES ({})".format(self.table, ", ".join("?" * 16)), params=post.to_list)

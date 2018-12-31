@@ -31,6 +31,7 @@ class obj:  # noqa: N801
     site_list = None
     sews = None
     tasker = None
+    post_storage = None
 
 
 class worker:  # noqa: N801

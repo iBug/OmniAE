@@ -12,6 +12,7 @@ from threading import Thread
 import core
 from utils import log
 from seapi import get_site_id
+from localstorage import PostStorage
 from tasking import Tasker
 from gitmanager import get_commit_info, check_for_updates
 import workers
@@ -33,6 +34,8 @@ def main():
     site_id = get_site_id(core.config.site)
     log('debug', "Fetched site ID {} from {}".format(site_id, core.config.site))
     core.config.site_id = site_id
+
+    core.obj.post_storage = PostStorage("posts.db")
 
     core.worker.sews.start()
     core.worker.scanner.start()
