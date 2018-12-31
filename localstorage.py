@@ -42,7 +42,7 @@ class LocalStorage:
         return r
 
     def table_exists(self, table="sqlite_master"):
-        return bool(self.execute("SELECT name FROM sqlite_master WHERE type='table' AND name=?;", [table]))
+        return bool(self.execute("SELECT name FROM sqlite_master WHERE type='table' AND name=?;", [table]).fetchall())
 
 
 class PostStorage(LocalStorage):
@@ -50,7 +50,6 @@ class PostStorage(LocalStorage):
 
     def __init__(self, filename):
         self.ls = LocalStorage(filename)
-        self.open()
         self.initialize()
 
     def open(self):
