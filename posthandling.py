@@ -11,7 +11,8 @@ class PostHandler:
 
     def handle(self, result):
         post = result.post
-        core.obj.post_storage.add(post)
+        if result.score >= 0.01:
+            core.obj.post_storage.add(post)
         if not result.active:
             log('info', "[{}] {}, score={:.3g}".format(
                 post.id, post.title, result.score))
