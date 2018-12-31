@@ -42,6 +42,8 @@ class PostStorage(LocalStorage):
 
     def __init__(self, filename):
         self.ls = LocalStorage(filename)
+        self.open()
+        self.initialize()
 
     def open(self):
         self.ls.open()
