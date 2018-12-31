@@ -19,8 +19,8 @@ REPO="$USERNAME/$REPONAME"
 
 main() {
   e_info "Starting deploy"
-  e_info "Copying branch to '$BRANCH'"
-  git branch -C $BRANCH
+  e_info "Moving branch to '$BRANCH'"
+  git branch -M $BRANCH
   e_info "Setting remote with \$GH_TOKEN"
   git remote add "$REMOTE-deploy" "https://$GH_TOKEN@github.com/$REPO.git"
   e_info "Pushing to $REMOTE/$BRANCH"
