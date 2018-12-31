@@ -3,9 +3,10 @@ import threading
 
 
 class LocalStorage:
-    def __init__(self, filename: str):
+    def __init__(self, filename: str, auto_open: bool=True):
         self.dbs = {}
         self.filename = filename
+        self.auto_open = auto_open
 
     def open(self):
         thread_id = threading.get_ident()
@@ -19,7 +20,10 @@ class LocalStorage:
     def execute(self, query: str, params=(), **kwargs):
         thread_id = threading.get_ident()
         try:
-            db = self.dbs[thread_id]
+            if self.auto_open:
+                db = self.open()
+            else:
+                db = self.dbs[thread_id]
         except KeyError:
             raise
         return db.execute(query, tuple(params), **kwargs)
