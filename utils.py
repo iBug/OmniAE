@@ -31,7 +31,7 @@ def log(log_level, *args):
     print(s, file=sys.stderr)
     exc_type, exc_obj, exc_tb = sys.exc_info()
     if exc_obj is not None:
-        print(traceback.format_tb(exc_tb))
+        print("".join(traceback.format_tb(exc_tb)))
 
     log_file(log_level, *args)
 
