@@ -15,7 +15,9 @@ class LocalStorage:
         return self.dbs[thread_id]
 
     def __call__(self, query: str, params=(), **kwargs):
-        return self.execute(query, params, **kwargs)
+        r = self.execute(query, params, **kwargs)
+        self.commit()
+        return r
 
     def execute(self, query: str, params=(), **kwargs):
         thread_id = threading.get_ident()
@@ -27,6 +29,17 @@ class LocalStorage:
         except KeyError:
             raise
         return db.execute(query, tuple(params), **kwargs)
+
+    def commit(self):
+        thread_id = threading.get_ident()
+        try:
+            if self.auto_open:
+                db = self.open()
+            else:
+                db = self.dbs[thread_id]
+        except KeyError:
+            raise
+        db.commit()
 
     def create_table(self, table, schema):
         if self.table_exists(table):
