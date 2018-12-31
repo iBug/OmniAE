@@ -28,4 +28,4 @@ main() {
   e_success "Successfully deployed"
 }
 
-main | sed "s/$GH_TOKEN/[secret]/g"
+main 2>&1 | sed "s/$GH_TOKEN/[secret]/g"
