@@ -50,4 +50,4 @@ class PostStorage(LocalStorage):
         self.ls.create_table(self.table, ["id INTEGER", "url TEXT PRIMARY KEY", "type TEXT", "site TEXT", "owner_url TEXT", "owner_name TEXT", "owner_rep INTEGER", "title TEXT", "body TEXT", "raw_body TEXT", "score INTEGER", "upvote INTEGER", "downvote INTEGER", "question_id INTEGER", "creation_date INTEGER", "last_edit_date INTEGER"])
 
     def add(self, post):
-        return self.ls.execute("INSERT INTO {} VALUES ({})".format(self.table, ", ".join("?" * 16)), params=post.to_list)
+        return self.ls.execute("INSERT INTO {} VALUES ({})".format(self.table, ", ".join("?" * 16)), params=post.to_list())

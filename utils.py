@@ -29,8 +29,9 @@ def log(log_level, *args):
     s = "{} {}".format(colored("[{}]".format(time_s), color, attrs=['bold']),
                        "\n             ".join([str(x) for x in args]))
     print(s, file=sys.stderr)
-    if sys.exc_info()[1] is not None:
-        traceback.print_stack()
+    exc_type, exc_obj, exc_tb = sys.exc_info()
+    if exc_obj is not None:
+        print(traceback.format_tb(exc_tb))
 
     log_file(log_level, *args)
 
@@ -46,7 +47,7 @@ def log_file(log_level, *args):
         print("[{}] {}".format(time_s, log_s), file=f)
 
 
-def log_exception(exc_obj=None):
+def log_exception(exc_obj=None, exc_tb=None):
     if exc_obj is None:
         exc_obj = sys.exc_info()[1]
     if exc_obj is None:
