@@ -16,7 +16,7 @@ def bracket_count(post):
 
     n_brackets = len(regex.compile(r"[{}](?=[ \t]*(?:\n|$))").findall(body)) + len(regex.compile(r"(?<=\w)\(\)(?=[\s);])").findall(body))
     if n_brackets >= 3:
-        score += math.sqrt(n_brackets - 3)
+        score = math.sqrt(n_brackets - 3)
 
     return score, "Post has {} brackets".format(n_brackets)
 
@@ -35,11 +35,11 @@ def java_keyword(post):
     n = body.count("@Override")
     score += n
 
-    m = regex.compile(r"(public|private)\s+(class|void|int)").findall(body)
+    m = regex.compile(r"(public|protected|private)\s+(class|void|int)").findall(body)
     score += len(m) * 1.5
-    m = regex.compile(r"new\s+\w+\(").findall(body)  # new Asdfgh(
+    m = regex.compile(r"new\s+[A-Z]\w+\(").findall(body)  # new Asdfgh(
     score += len(m) * 1.5
-    return score, "Post has Java keyword"
+    return score, "Post has Java code"
 
 
 @development.new("android code", 1.5)
@@ -49,7 +49,7 @@ def android_code(post):
 
     match = regex.compile(
         r"(?s)(?<!\.)[A-Za-z]{2,}(?:"
-        r"Activity|Fragment|(?<!(?i:web))View|Text|Exception|Manager|Method|Interface|Listener|Request|Layout"
+        r"Activity|Fragment|(?<!(?i:web\s*))View|Text|Exception|Manager|Method|Interface|Listener|Request|Layout"
         r")\b"
     ).findall(body)
     score += len(match)
@@ -69,7 +69,7 @@ def android_code(post):
     score += len(match) * 2.0
 
     match = regex.compile(r"(?i)android\W*studio").findall(body)
-    score += len(match)
+    score += bool(match)
 
     return score, "Post has Android code"
 

@@ -16,6 +16,7 @@ from localstorage import PostStorage
 from tasking import Tasker
 from gitmanager import get_commit_info, check_for_updates
 import workers
+import checks
 
 
 def register_tasks():

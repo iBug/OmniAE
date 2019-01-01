@@ -5,16 +5,18 @@ class PostCheck:
     """
     A single check against posts
     """
-    def __init__(self, func, reason, threshold=0.0):
+    def __init__(self, func, reason, threshold=0.0, multiplier=1.0):
         self.func = func
         self.reason = reason
         self.threshold = threshold
+        self.multiplier = multiplier
 
     def run(self, post):
-        return self.func(post)
+        score, detail = self.func(post)
+        return score * self.multiplier, detail
 
     def __call__(self, post):
-        return self.func(post)
+        return self.run(post)
 
 
 class PostScanResult:
@@ -37,10 +39,11 @@ class PostScanner:
         self.checks = []
         self.threshold = threshold
 
-    def new(self, reason, threshold=0.0):
+    def new(self, reason, threshold=0.0, multiplier=1.0):
         def decorator(f):
-            check = PostCheck(f, reason, threshold)
+            check = PostCheck(f, reason, threshold, multiplier)
             self.checks.append(check)
+            return f
         return decorator
 
     def check_post(self, post):
@@ -54,6 +57,3 @@ class PostScanner:
                 reasons.append(check.reason)
                 details.append(check_details)
         return PostScanResult(post, self, score, reasons, "\n".join(details))
-
-
-import checks
