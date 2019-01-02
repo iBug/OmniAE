@@ -31,6 +31,7 @@ def main():
     log('info', "Starting at [{}] {}: {}".format(commit_info['id'], commit_info['author'], commit_info['message']))
 
     register_tasks()
+    workers.register_workers()
 
     site_id = get_site_id(core.config.site)
     log('debug', "Fetched site ID {} from {}".format(site_id, core.config.site))

@@ -64,6 +64,7 @@ class PostHandlerWorker(Worker):
             self.handler.handle(result)
 
 
-core.worker.sews = SEWSWorker()
-core.worker.scanner = PostScannerWorker()
-core.worker.handler = PostHandlerWorker()
+def register_workers():
+    core.worker.sews = SEWSWorker()
+    core.worker.scanner = PostScannerWorker()
+    core.worker.handler = PostHandlerWorker()
