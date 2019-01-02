@@ -79,7 +79,7 @@ def coding_intention(post):
     score = 0.0
     body = post.title + "\n\n" + post.raw_body
 
-    match = regex.compile(r"(?i)\b(build|wr[io]te?|develop|cre?ate|ma[dk]e)e?d?(?:ing)?\b.{,20}\bapp(?:lication)?s?\b").findall(body)
+    match = regex.compile(r"(?i)\b(build|wr[io]te?|develop|cre?ate|ma[dk]e)e?d?(?:ing)?\b.{,20}\b(?:app(?:lication)|intent)?s?\b").findall(body)
     score += len(match) * 2.0
 
     match = regex.compile(r"(?i)\bmy\b.{,20}\bapp(?:lication)?s?\b").findall(body)
