@@ -3,7 +3,7 @@ import threading
 
 
 class LocalStorage:
-    def __init__(self, filename: str, auto_open: bool=True):
+    def __init__(self, filename: str, auto_open=True):
         self.dbs = {}
         self.filename = filename
         self.auto_open = auto_open

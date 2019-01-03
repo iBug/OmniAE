@@ -25,6 +25,7 @@ def bracket_count(post):
 def java_keyword(post):
     score = 0.0
     body = post.title + "\n\n" + post.raw_body
+    s = []
 
     n = body.count("public")
     if n >= 5:
@@ -32,20 +33,27 @@ def java_keyword(post):
     n = regex.compile(r"\b(?:class|void|int|boolean)\b").findall(body)
     if len(n) >= 2:
         score += (len(n) - 2) / 2
+        s.append("Keywords: " + ", ".join([repr(x) for x in n]))
     n = body.count("@Override")
     score += n
 
     m = regex.compile(r"(public|protected|private)\s+(class|void|int)").findall(body)
     score += len(m) * 1.5
+    if m:
+        s.append("Keywords: " + ", ".join([repr(x) for x in m]))
+
     m = regex.compile(r"new\s+[A-Z]\w+\(").findall(body)  # new Asdfgh(
     score += len(m) * 1.5
-    return score, "Post has Java code"
+    if m:
+        s.append("Keywords: " + ", ".join([repr(x) for x in m]))
+    return score, "Java code:\n" + "\n".join(s)
 
 
 @development.new("android code", 1.5)
 def android_code(post):
     score = 0.0
     body = post.title + "\n\n" + post.raw_body
+    s = []
 
     match = regex.compile(
         r"(?s)(?<!\.)[A-Za-z]{2,}(?:"
@@ -53,36 +61,50 @@ def android_code(post):
         r")\b"
     ).findall(body)
     score += len(match)
+    if match:
+        s.append("Keywords: " + ", ".join([repr(x) for x in match]))
 
     keywords = "|".join([
         r"(?i:Text|Grid|List|Recycler)\s*View"
     ])
     match = regex.compile(r"(?i)\b({})\b".format(keywords)).findall(body)
     score += len(match)
+    if match:
+        s.append("Keywords: " + ", ".join([repr(x) for x in match]))
 
     match = regex.compile(r"\b[A-Z]+(?:_[A-Z]+)+\b").findall(body)
     score += len(match) * 0
+    if match:
+        s.append("Keywords: " + ", ".join([repr(x) for x in match]))
 
     match = regex.compile(
         r"\b(?:MainActivity|AppCompatActivity|onCreate)\b"
     ).findall(body)
     score += len(match) * 2.0
+    if match:
+        s.append("Keywords: " + ", ".join([repr(x) for x in match]))
 
     match = regex.compile(r"(?i)android\W*studio").findall(body)
     score += bool(match)
+    if match:
+        s.append("Keywords: " + ", ".join([repr(x) for x in match]))
 
-    return score, "Post has Android code"
+    return score, "Android code:\n" + "\n".join(s)
 
 
 @development.new("coding intention", 1.0)
 def coding_intention(post):
     score = 0.0
     body = post.title + "\n\n" + post.raw_body
+    s = []
 
     match = regex.compile(r"(?i)\b(build|wr[io]te?|develop|cre?ate|ma[dk]e)e?d?(?:ing)?\b.{,20}\b(?:app(?:lication)|intent)?s?\b").findall(body)
     score += len(match) * 2.0
+    s.append("Keywords: " + ", ".join([repr(x) for x in match]))
 
     match = regex.compile(r"(?i)\bmy\b.{,20}\bapp(?:lication)?s?\b").findall(body)
-    score += int(len(match) > 0) * 0.5
+    if match:
+        score += 0.5
+        s.append("Keywords: " + ", ".join([repr(x) for x in match]))
 
-    return score, "placeholder"
+    return score, "Coding intention:\n" + "\n".join(s)
