@@ -26,7 +26,10 @@ class PostScanResult:
         self.score = score
         self.reasons = reasons
         self.details = details
-        self.active = (score >= scanner.threshold)
+
+    @property
+    def active(self):
+        return self.score >= self.scanner.threshold
 
 
 class PostScanner:
