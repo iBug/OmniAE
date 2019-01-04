@@ -1,0 +1,25 @@
+[Config]
+
+# Stack Exchange API keys & credentials
+read_key = IAkbitmze4B8KpacUfLqkw((
+write_key = (((write_key)))
+write_token = (((write_token)))
+
+# ChatExchange credentials
+ChatU = asdfghjkl@example.com
+ChatP = asdfghjkl123456789
+
+# Site settings
+site = android.stackexchange.com
+site_id = 139
+
+# Log control
+log_level = 0
+file_log_level = 2
+log_file = log.txt
+
+# Databases
+db_file = androidoverflow.db
+
+# Repo information
+repo_slug = iBug/AndroidOverflow

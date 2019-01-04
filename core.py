@@ -1,6 +1,7 @@
 # LOL. Hope you're not fooled by the name of this file
 
 
+import sys
 import os
 from configparser import ConfigParser
 
@@ -50,7 +51,9 @@ config_parser = ConfigParser()
 def load():
     global config_parser
 
-    if os.path.isfile("config"):
+    if "pytest" in sys.modules:
+        config_parser.read("config.ci", encoding="utf-8")
+    elif os.path.isfile("config"):
         config_parser.read("config", encoding="utf-8")
     else:
         config_parser.read("config.sample", encoding="utf-8")
