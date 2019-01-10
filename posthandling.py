@@ -27,7 +27,8 @@ class PostHandler:
                 log('attention', "Post too old ({}), ignored".format(
                     datetime.fromtimestamp(post.creation_date).isoformat()))
                 return
-            log('attention', "Adding mod flag on <{}>".format(post.title))
+            log('attention', "Would add mod flag on <{}>".format(post.title))
+            return
             add_mod_flag(post.site, post.id,
                          "question", "[Auto] Development question detected, score={}".format(
                              round(result.score, 2)))
