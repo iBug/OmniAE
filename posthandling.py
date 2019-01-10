@@ -16,21 +16,20 @@ class PostHandler:
             log('info', result.details)
             # core.obj.result_storage.add(result)
         if not result.active:
-            log('info', "[{}] {}, score={:.3g}".format(
-                post.id, post.title, result.score))
+            log('info', "[{}] {}, score={}".format(
+                post.id, post.title, round(result.score, 2)))
             return
 
-        log('attention', "[{}] {} caught as {}, score={:.3g}".format(
-            post.id, post.title, result.scanner.name, result.score))
+        log('attention', "[{}] {} caught as {}, score={}".format(
+            post.id, post.title, result.scanner.name, round(result.score, 2)))
         if result.scanner.name == "development question":
             if post.creation_date < datetime.now().timestamp() - 172800:  # 2 days
-                log('attention', "Post too old ({}), ignored, score={}".format(
-                    datetime.fromtimestamp(post.creation_date).isoformat(),
-                    result.score))
+                log('attention', "Post too old ({}), ignored".format(
+                    datetime.fromtimestamp(post.creation_date).isoformat()))
                 return
             log('attention', "Adding mod flag on <{}>".format(post.title))
             add_mod_flag(post.site, post.id,
-                         "question", "[Auto] Development question detected, score={:.2g}".format(
-                             result.score))
+                         "question", "[Auto] Development question detected, score={}".format(
+                             round(result.score, 2)))
         else:
             print("No handler implemented for {!r}".format(result.scanner))
