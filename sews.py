@@ -69,7 +69,7 @@ class StackExchangeWebSocket:
                 j = json.loads(j)
                 action = j['action']
                 if action == "hb":
-                    log('debug', "Action: hb")
+                    # log('debug', "Action: hb")
                     self.ws.send("hb")
                     continue
                 data = json.loads(j['data'])
