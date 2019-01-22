@@ -10,6 +10,21 @@ from configparser import ConfigParser
 # They're intended to be singletons
 
 
+class Object(object):
+    def __init__(self, **kwargs):
+        self.__dict__["data"] = dict(kwargs)
+
+    def __getattr__(self, attr):
+        try:
+            return self.data[attr]
+        except KeyError:
+            raise AttributeError("Object has no attribute {!r}".format(attr)) from None
+
+    def __setattr__(self, attr, value):
+        self.data[attr] = value
+        return value
+
+
 class config:  # noqa: N801
     read_key = None
     write_key = None
