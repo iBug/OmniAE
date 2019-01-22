@@ -12,17 +12,30 @@ from configparser import ConfigParser
 
 class Object(object):
     def __init__(self, **kwargs):
-        self.__dict__["data"] = dict(kwargs)
+        self.__dict__["_data"] = dict(kwargs)
+        self.__dict__["_default"] = None
 
     def __getattr__(self, attr):
         try:
-            return self.data[attr]
+            return self._data[attr]
         except KeyError:
+            if self._default:
+                return self._default()
             raise AttributeError("Object has no attribute {!r}".format(attr)) from None
 
     def __setattr__(self, attr, value):
-        self.data[attr] = value
+        self._data[attr] = value
         return value
+
+    def __getitem__(self, index):
+        return self._data[index]
+
+    def __setitem__(self, index, value):
+        self._data[index] = value
+        return value
+
+    def set_default(self, default=None):
+        self._default = default
 
 
 class config:  # noqa: N801
@@ -56,8 +69,9 @@ class worker:  # noqa: N801
     handler = None
 
 
-class check:  # noqa: N801
-    development = None
+check = Object(
+    development=None,
+)
 
 
 config_parser = ConfigParser()
