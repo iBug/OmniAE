@@ -11,9 +11,9 @@ from configparser import ConfigParser
 
 
 class Object(object):
-    def __init__(self, **kwargs):
+    def __init__(self, _default=None, **kwargs):
         self.__dict__["_data"] = dict(kwargs)
-        self.__dict__["_default"] = None
+        self.__dict__["_default"] = _default
 
     def __getattr__(self, attr):
         try:
@@ -41,22 +41,7 @@ class Object(object):
         self._default = default
 
 
-class config:  # noqa: N801
-    read_key = None
-    write_key = None
-    write_token = None
-
-    site = None
-    site_id = None
-
-    log_level = None
-    file_log_level = None
-    log_file = None
-
-    db_file = None
-
-    repo_slug = None
-    commit_info = None
+config = Object(_default=type(None))
 
 
 class obj:  # noqa: N801
