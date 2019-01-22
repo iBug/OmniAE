@@ -6,8 +6,8 @@ write_key = (((write_key)))
 write_token = (((write_token)))
 
 # ChatExchange credentials
-ChatU = asdfghjkl@example.com
-ChatP = asdfghjkl123456789
+ChatU = pytest@example.com
+ChatP = pytest_pytest
 
 # Site settings
 site = android.stackexchange.com

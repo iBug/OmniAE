@@ -20,7 +20,8 @@ class Object(object):
             return self._data[attr]
         except KeyError:
             if self._default:
-                return self._default()
+                self._data[attr] = self._default()
+                return self._data[attr]
             raise AttributeError("Object has no attribute {!r}".format(attr)) from None
 
     def __setattr__(self, attr, value):
@@ -35,6 +36,8 @@ class Object(object):
         return value
 
     def set_default(self, default=None):
+        if default is True:
+            default = Object
         self._default = default
 
 
