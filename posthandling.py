@@ -2,7 +2,7 @@ from datetime import datetime
 
 import core
 from utils import log
-from seapi import add_mod_flag
+from seapi import add_close_vote, add_mod_flag
 
 
 class PostHandler:
