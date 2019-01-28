@@ -38,15 +38,13 @@ class StackExchangeWebSocket:
     def register(self, action, callback=None):
         if not isinstance(action, str):
             raise TypeError("action must be str")
-        if callback:
-            self.on_action[action] = callback
+        self.on_action[action] = callback
         self.ws.send(action)
 
     def unregister(self, action, callback=None):
         if not isinstance(action, str):
             raise TypeError("action must be str")
-        if action in self.on_action:
-            del self.on_action[action]
+        del self.on_action[action]
         self.ws.send("-" + action)
 
     def restore(self):
