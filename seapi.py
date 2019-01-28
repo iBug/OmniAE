@@ -99,6 +99,22 @@ def check_write_permission():
     return bool(core.config.write_key and core.config.write_token)
 
 
+def add_close_vote(site, post_id, flag_id):
+    if not check_write_permission():
+        return
+
+    url = "https://api.stackexchange.com/2.2/questions/{}/flags/add".format(post_id)
+    params = {
+        'site': site,
+        'key': core.config.write_key,
+    }
+    payload = {
+        'access_token': core.config.write_token,
+    }
+    response = requests.post(url, params=params, data=payload).json()
+    return response
+
+
 def add_mod_flag(site, post_id, post_type, text):
     if not check_write_permission():
         return
@@ -135,9 +151,7 @@ def add_mod_flag(site, post_id, post_type, text):
         'option_id': str(option_id),
         'comment': str(text),
     }
-    # log('debug', "Calling {} with params={}".format(url, params))
     response = requests.post(url, data=params).json()
-    # log('debug', "Response: {!r}".format(response))
     return response
 
 

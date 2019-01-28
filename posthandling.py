@@ -27,10 +27,11 @@ class PostHandler:
                 log('attention', "Post too old ({}), ignored".format(
                     datetime.fromtimestamp(post.creation_date).isoformat()))
                 return
-            log('attention', "Would add mod flag on <{}>".format(post.title))
-            return
-            add_mod_flag(post.site, post.id,
-                         "question", "[Auto] Development question detected, score={}".format(
-                             round(result.score, 2)))
+            # log('attention', "Would add mod flag on <{}>".format(post.title))
+            log('attention', "Adding close vote on [{}] {}".format(post.id, post.title))
+            add_close_vote(post.site, post.id, 36662)
+            # add_mod_flag(post.site, post.id,
+            #              "question", "[Auto] Development question detected, score={}".format(
+            #                  round(result.score, 2)))
         else:
             print("No handler implemented for {!r}".format(result.scanner))
