@@ -2,7 +2,7 @@ from datetime import datetime
 
 import core
 from utils import log
-from seapi import add_close_vote, add_mod_flag
+from seapi import close_as_off_topic, add_mod_flag
 
 
 class PostHandler:
@@ -29,7 +29,7 @@ class PostHandler:
                 return
             # log('attention', "Would add mod flag on <{}>".format(post.title))
             log('attention', "Adding close vote on [{}] {}".format(post.id, post.title))
-            add_close_vote(post.site, post.id, 36662)
+            close_as_off_topic(post.site, post.id, "develop")
             # add_mod_flag(post.site, post.id,
             #              "question", "[Auto] Development question detected, score={}".format(
             #                  round(result.score, 2)))

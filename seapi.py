@@ -99,16 +99,42 @@ def check_write_permission():
     return bool(core.config.write_key and core.config.write_token)
 
 
-def add_close_vote(site, post_id, flag_id):
+def close_as_off_topic(site, post_id, keyword="developers"):
     if not check_write_permission():
         return
 
-    url = "https://api.stackexchange.com/2.2/questions/{}/flags/add".format(post_id)
+    # Query API for close vote ID
+    url = "https://api.stackexchange.com/2.2/questions/{}/close/options".format(post_id)
     params = {
         'site': site,
         'key': core.config.write_key,
     }
     payload = {
+        'access_token': core.config.write_token,
+    }
+    response = requests.post(url, params=params, data=payload).json()
+    for item in response['items']:
+        if 'off-topic' in item['title']:
+            break
+    else:
+        return None  # No "off-topic" ???
+    off_topic_list = item['sub_options']
+
+    for item in off_topic_list:
+        if keyword in item['description']:
+            option_id = item['option_id']
+    else:
+        return None  # bad keyword
+
+    # Add close vote
+    url = "https://api.stackexchange.com/2.2/questions/{}/flags/add".format(post_id)
+    payload = {
+        'id': int(post_id),
+        'question_id': int(post_id),
+        'option_id': option_id,
+        'site': site,
+        'target_site': site,
+        'key': core.config.write_key,
         'access_token': core.config.write_token,
     }
     response = requests.post(url, params=params, data=payload).json()
