@@ -18,7 +18,7 @@ class StackExchangeWebSocket:
             raise ValueError("WebSocket is already open")
 
         for tries in range(1, 1 + max_tries, 1):
-            if trieds > 1:
+            if tries > 1:
                 log('debug', "Trying to open websocket (Attempt {})".format(tries))
             try:
                 self.ws = websocket.create_connection(StackExchangeWebSocket.WS_URL)
