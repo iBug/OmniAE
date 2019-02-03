@@ -107,12 +107,10 @@ def close_as_off_topic(site, post_id, keyword="developers"):
     url = "https://api.stackexchange.com/2.2/questions/{}/close/options".format(post_id)
     params = {
         'site': site,
+        'access_token': core.config.write_token,
         'key': core.config.write_key,
     }
-    payload = {
-        'access_token': core.config.write_token,
-    }
-    response = requests.post(url, params=params, data=payload).json()
+    response = requests.get(url, params=params).json()
     for item in response['items']:
         if 'off-topic' in item['title']:
             break
@@ -123,6 +121,7 @@ def close_as_off_topic(site, post_id, keyword="developers"):
     for item in off_topic_list:
         if keyword in item['description']:
             option_id = item['option_id']
+            break
     else:
         return None  # bad keyword
 
@@ -137,7 +136,7 @@ def close_as_off_topic(site, post_id, keyword="developers"):
         'key': core.config.write_key,
         'access_token': core.config.write_token,
     }
-    response = requests.post(url, params=params, data=payload).json()
+    response = requests.post(url, data=payload).json()
     return response
 
 
