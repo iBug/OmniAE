@@ -48,7 +48,7 @@ def java_keyword(post):
     if m:
         s.append("Keywords: " + ", ".join([repr(x) for x in m]))
 
-    m = re(r"(?<!\s)\.\w+\(").findall(body)  # a.b(
+    m = re(r"(?<!\s)\.\w+\((?!\w+\.java:\d+\))").findall(body)  # a.b(
     score += len(m) * 1.5
     if m:
         s.append("Keywords: " + ", ".join([repr(x) for x in m]))
