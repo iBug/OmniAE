@@ -104,7 +104,7 @@ def coding_intention(post):
     body = post.title + "\n\n" + post.raw_body
     s = []
 
-    match = re(r"(?i)\b(?:build|wr[io]t|develop|cre?at|ma[dk]|compil)e?d?(?:ing)?\b.{,20}\b(?:app(?:lication)?|intent|code|program|driver)s?\b").findall(body)
+    match = re(r"(?i)\b(?:build|wr[io]t|develop|cre?at|ma[dk]|compil)e?d?(?:ing)?\b.{,20}\b(?:app(?:lication)?|intent|code|program\w*|driver)s?\b").findall(body)
     score += len(match) * 2.0
     s.append("Keywords: " + ", ".join([repr(x) for x in match]))
 
