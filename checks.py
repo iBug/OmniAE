@@ -63,7 +63,7 @@ def android_code(post):
 
     match = re(
         r"(?s)(?<!\.)[A-Za-z]{2,}(?:"
-        r"Activity|Fragment|(?<!(?i:web\s*))View|Text|Exception|Manager|Method|Interface|Listener|Request|Layout"
+        r"Activity|Fragment|(?<!(?i:web\s*))View|Text|Exception|Manager|Method|Interface|Listener|Request|Layout|Drawable"
         r")\b"
     ).findall(body)
     score += len(match)
@@ -80,6 +80,11 @@ def android_code(post):
 
     match = re(r"\b[A-Z]+(?:_[A-Z]+)+\b").findall(body)
     score += len(match) * 0
+    if match:
+        s.append("Keywords: " + ", ".join([repr(x) for x in match]))
+
+    match = re(r'\bandroid:\w+="').findall(body)
+    score += len(match) * 1
     if match:
         s.append("Keywords: " + ", ".join([repr(x) for x in match]))
 
