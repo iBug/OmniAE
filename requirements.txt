@@ -3,7 +3,7 @@ git+https://github.com/ArtOfCode-/ChatExchange.git@6d9644dd39630f61333e84ef4dff4
 beautifulsoup4>=4.6.0
 coverage>=4.5.0
 dnspython>=1.15.0
-flake8~=3.5.0
+flake8~=3.8.3
 httplib2>=0.9.2
 pep8-naming>=0.5.0
 pytest>=3.6.0
